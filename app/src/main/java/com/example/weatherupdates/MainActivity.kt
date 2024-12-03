@@ -29,6 +29,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
+import androidx.compose.material3.DisplayMode
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -57,6 +58,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.weatherupdates.core.formatHourAndMinute
 import com.example.weatherupdates.ui.composables.WeatherCard
 import com.example.weatherupdates.ui.composables.WeatherDataDisplay
 import com.example.weatherupdates.ui.viewmodels.CurrentWeatherViewModel
@@ -92,7 +94,6 @@ fun MainNav(
 
     val state = viewModel.state.value
 
-    // Fetch weather details only if the date is selected
     LaunchedEffect(selectedDate) {
         selectedDate?.let {
             viewModel.fetchWeatherDetails(it)
@@ -109,17 +110,20 @@ fun MainNav(
                     .fillMaxSize()
                     .padding(16.dp)
             ) {
-                // Calendar at the top
-                if (showCalendar) {
-                    CalendarView(
-                        onDateSelected = { timestamp ->
-                            selectedDate = timestamp?.let { convertTimestampToDate(it) }
-                            showCalendar = false // Dismiss the calendar after selecting a date
-                        },
-                        onDismiss = {
-                            showCalendar = false // Dismiss the calendar when canceling
-                        }
-                    )
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    if (showCalendar) {
+                        CalendarView(
+                            onDateSelected = { timestamp ->
+                                selectedDate = timestamp?.let { convertTimestampToDate(it) }
+                                showCalendar = false
+                            },
+                            onDismiss = {
+                                showCalendar = false
+                            }
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(16.dp)) // Space between calendar and weather
@@ -137,7 +141,6 @@ fun MainNav(
             }
         }
 
-        // Other routes (e.g., CurrentWeatherScreen and CalendarDetailsScreen)
         composable(route = Screen.CurrentWeatherScreen.route) {
             CurrentWeatherScreen(navController)
         }
@@ -166,17 +169,16 @@ sealed class Screen(val route: String) {
 @Composable
 fun CalendarView(
     onDateSelected: (Long?) -> Unit,
-    onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    onDismiss: () -> Unit
 ) {
-    val datePickerState = rememberDatePickerState()
+    val datePickerState = rememberDatePickerState(initialDisplayMode = DisplayMode.Input)
 
     DatePickerDialog(
         onDismissRequest = onDismiss,
         confirmButton = {
             TextButton(onClick = {
                 onDateSelected(datePickerState.selectedDateMillis)
-                onDismiss() // Close the calendar after selecting a date
+                onDismiss()
             }) {
                 Text("OK")
             }
@@ -187,11 +189,9 @@ fun CalendarView(
             }
         }
     ) {
-        DatePicker(state = datePickerState, modifier = modifier)
+        DatePicker(state = datePickerState)
     }
 }
-
-
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CurrentWeatherScreen(
@@ -207,8 +207,8 @@ fun CurrentWeatherScreen(
     } else {
         WeatherCard(
             state = state,
-            backgroundColor = Color.LightGray, // Choose a suitable color for the card background
-            modifier = Modifier.fillMaxWidth() // Adjust as necessary
+            backgroundColor = Color.LightGray,
+            modifier = Modifier.fillMaxWidth()
         )
     }
 }
@@ -261,11 +261,6 @@ fun CalendarDetailsScreen(
                         .fillMaxSize()
                         .padding(paddingValues)
                 ) {
-                    Text(
-                        text = "Weather Details for $date",
-                        modifier = Modifier.padding(16.dp),
-                    )
-
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         contentPadding = PaddingValues(16.dp),
@@ -283,7 +278,7 @@ fun CalendarDetailsScreen(
                                     modifier = Modifier.padding(8.dp),
                                     horizontalAlignment = Alignment.Start
                                 ) {
-                                    Text(text = "Hour: ${formatHourAndMinute(hour.time)}")
+                                    Text(text = "Today: ${formatHourAndMinute(hour.time)}")
 
                                     Text(
                                         text = "Temp: ${hour.temp_c}°C",
@@ -319,14 +314,6 @@ fun CalendarDetailsScreen(
         }
 
     }
-}
-
-
-@RequiresApi(Build.VERSION_CODES.O)
-fun formatHourAndMinute(dateTimeString: String): String {
-    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
-    val dateTime = LocalDateTime.parse(dateTimeString, formatter)
-    return dateTime.format(DateTimeFormatter.ofPattern("HH:mm"))
 }
 
 

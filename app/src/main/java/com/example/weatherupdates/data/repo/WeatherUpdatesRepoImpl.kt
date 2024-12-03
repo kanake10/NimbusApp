@@ -63,28 +63,23 @@ class WeatherUpdatesRepoImpl(
         Log.d("WeatherUpdatesRepo", "Fetching weather for date: $date...")
         emit(Resource.Loading())
 
-        // Step 1: Attempt to fetch weather details for the given date from local storage
         val localWeatherData = weatherDetailsDao.getWeatherByDate(date)?.toDomain()
         Log.d("WeatherUpdatesRepo", "Local data for date $date fetched: $localWeatherData")
 
-        // Step 2: Emit local data if available
         localWeatherData?.let {
             Log.d("WeatherUpdatesRepo", "Emitting local data for date $date as success")
             emit(Resource.Success(it))
         }
 
-        // Step 3: If no local data, fetch from the API
         try {
             Log.d("WeatherUpdatesRepo", "Calling weather updates API for date: $date...")
-            val weatherApiResponse = weatherUpdatesApi.getWeatherDetails(date) // Assuming the API has this endpoint
+            val weatherApiResponse = weatherUpdatesApi.getWeatherDetails(date)
             Log.d("WeatherUpdatesRepo", "API response for date $date: $weatherApiResponse")
 
-            // Step 4: Convert the API response to an entity and insert it into the local database
             Log.d("WeatherUpdatesRepo", "Inserting API data into local database for date $date")
             val entity = weatherApiResponse.toEntity()
             weatherDetailsDao.saveWeatherData(entity)
 
-            // Step 5: Fetch updated data from the local database after inserting API response
             val updatedData = weatherDetailsDao.getWeatherByDate(date)?.toDomain()
             updatedData?.let {
                 Log.d("WeatherUpdatesRepo", "Emitting updated data for date $date as success")
@@ -101,6 +96,5 @@ class WeatherUpdatesRepoImpl(
             emit(Resource.Error("An unexpected error occurred", data = localWeatherData))
         }
     }
-
 }
 

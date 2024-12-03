@@ -18,9 +18,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weatherupdates.ui.viewmodels.CurrentWeatherViewModel
-import java.time.format.DateTimeFormatter
 import kotlin.math.roundToInt
 import com.example.weatherupdates.R
+import com.example.weatherupdates.core.formatHourAndMinute
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -43,15 +43,7 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Today ${
-                        data.location.localtime.format(
-                            DateTimeFormatter.ofPattern("HH:mm")
-                        )
-                    }",
-                    modifier = Modifier.align(Alignment.End),
-                    color = Color.White
-                )
+                Text(text = "Hour: ${formatHourAndMinute(data.location.localtime)}")
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "${data.current.temp_c}°C",
