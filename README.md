@@ -1,6 +1,9 @@
 # NimbusApp
 
 NimbusApp App using [Android Architecture Components](https://developer.android.com/topic/libraries/architecture/), in 100% Kotlin, using Android Jetpack Components, and in Compose :rocket:
+
+The Nimbus App is a user-friendly Android application built using Kotlin and Jetpack Compose to display historical weather data. It provides an intuitive calendar-based interface for selecting dates and viewing detailed hourly weather conditions. Designed with offline functionality, the app ensures seamless user experience even without internet access.
+
 ## Tech-stack
 * Tech-stack
     * [Kotlin](https://kotlinlang.org/) - a modern, cross-platform, statically typed, general-purpose programming language with type inference.
