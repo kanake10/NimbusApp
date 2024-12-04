@@ -95,7 +95,6 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
     implementation ("com.google.dagger:hilt-android:2.50")
     ksp ("com.google.dagger:hilt-compiler:2.50")
-
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 

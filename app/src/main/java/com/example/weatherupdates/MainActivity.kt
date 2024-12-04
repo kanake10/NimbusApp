@@ -282,7 +282,7 @@ fun CalendarDetailsScreen(
                                     modifier = Modifier.padding(8.dp),
                                     horizontalAlignment = Alignment.Start
                                 ) {
-                                    Text(text = "Today: ${formatHourAndMinute(hour.time)}")
+                                    Text(text = "Hour: ${formatHourAndMinute(hour.time)}")
 
                                     Text(
                                         text = "Temp: ${hour.temp_c}°C",
