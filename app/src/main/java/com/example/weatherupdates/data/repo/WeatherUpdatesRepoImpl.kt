@@ -85,7 +85,6 @@ class WeatherUpdatesRepoImpl(
             Log.d("WeatherUpdatesRepo", "Emitting local data for date $date as success")
             emit(Resource.Success(it))
         }
-
         try {
             Log.d("WeatherUpdatesRepo", "Calling weather updates API for date: $date...")
             val weatherApiResponse = weatherUpdatesApi.getWeatherDetails(date)

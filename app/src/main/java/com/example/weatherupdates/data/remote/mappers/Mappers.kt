@@ -38,15 +38,14 @@ internal fun CurrentWeatherEntity.toDomain(): CurrentWeatherDomain {
 
 
 internal fun WeatherDetailsDto.toEntity(): WeatherDetailsEntity {
-    // Assuming we want the first forecast day
-    val forecastDay = forecast.forecastday.firstOrNull()  // Get the first forecast day
-    val firstHour = forecastDay?.hour ?: emptyList()  // Get the list of hours, or an empty list
+    val forecastDay = forecast.forecastday.firstOrNull()
+    val firstHour = forecastDay?.hour ?: emptyList()
 
 
     return WeatherDetailsEntity(
-        id = 0,  // Generate or extract the ID
-        date = forecastDay?.date ?: "",  // Extract the date from the first forecast day
-        hour = firstHour  // Get the hour list from the first forecast day
+        id = 0,
+        date = forecastDay?.date ?: "",
+        hour = firstHour
     )
 }
 

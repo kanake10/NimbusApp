@@ -18,6 +18,9 @@ package com.example.weatherupdates.data.remote.utils
 import okhttp3.Interceptor
 import okhttp3.Response
 
+/**
+ * This class isn't being used/reference anywhere
+ */
 
 class Interceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

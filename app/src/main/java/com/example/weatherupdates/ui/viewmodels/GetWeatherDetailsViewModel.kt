@@ -35,7 +35,6 @@ class GetWeatherDetailsViewModel @Inject constructor(
     private val _state = mutableStateOf(WeatherDetailsState())
     val state: State<WeatherDetailsState> = _state
 
-    // Call the use case when the ViewModel is initialized
     fun fetchWeatherDetails(date: String) {
         getWeatherDetailsUseCase(date).onEach { result ->
             when (result) {

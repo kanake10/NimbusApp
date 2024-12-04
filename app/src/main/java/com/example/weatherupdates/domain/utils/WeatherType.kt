@@ -18,6 +18,10 @@ package com.example.weatherupdates.domain.utils
 import androidx.annotation.DrawableRes
 import com.example.weatherupdates.R
 
+/**
+ * Not referenced anywhere at the moment,exists for future use
+ */
+
 sealed class WeatherType(
     val weatherDesc: String,
     @DrawableRes val iconRes: Int

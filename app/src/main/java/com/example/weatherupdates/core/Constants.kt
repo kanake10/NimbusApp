@@ -18,6 +18,8 @@ package com.example.weatherupdates.core
 object Constants {
     const val BASE_URL="https://api.weatherapi.com/v1/"
     const val DB_NAME="nimbus_db"
+    const val city = "Nairobi"
+    const val appId = "a236ebb90d17481da56144752240212"
     const val CURRENT_WEATHER="current.json"
     const val WEATHER_DETAILS_ENDPOINT="history.json"
 }

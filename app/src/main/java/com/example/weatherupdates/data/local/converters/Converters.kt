@@ -15,7 +15,6 @@
  */
 package com.example.weatherupdates.data.local.converters
 
-
 import androidx.room.ProvidedTypeConverter
 import androidx.room.TypeConverter
 import com.example.weatherupdates.data.remote.dtos.current.Current
@@ -26,7 +25,6 @@ import com.google.gson.reflect.TypeToken
 
 @ProvidedTypeConverter
 class Converters(private val gson : Gson)  {
-
 
     @TypeConverter
     fun fromCurrent(current: Current): String {
