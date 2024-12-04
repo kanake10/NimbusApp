@@ -139,9 +139,7 @@ fun MainNav(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(16.dp)) // Space between calendar and weather
-
-                // Current Weather or Calendar Details below
+                Spacer(modifier = Modifier.height(16.dp))
                 if (selectedDate == null) {
                     CurrentWeatherScreen(navController)
                 } else {
@@ -179,6 +177,7 @@ sealed class Screen(val route: String) {
     object CalendarDetailsScreen : Screen("calendar_details")
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CalendarView(
     onDateSelected: (Long?) -> Unit,
@@ -234,20 +233,6 @@ fun CalendarDetailsScreen(
     navController: NavHostController
 ) {
     Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Hourly Details") },
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.navigate(Screen.CalendarView.route) {
-                            popUpTo(Screen.CalendarView.route) { inclusive = true }
-                        }
-                    }) {
-                        Icon(imageVector = Icons.Filled.ArrowBack, contentDescription = "Back")
-                    }
-                }
-            )
-        }
     ) { paddingValues ->
         if (state.isLoading) {
             Box(
@@ -325,9 +310,9 @@ fun CalendarDetailsScreen(
                 }
             }
         }
-
     }
 }
+
 
 
 
