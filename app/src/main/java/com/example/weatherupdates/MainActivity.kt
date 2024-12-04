@@ -225,6 +225,7 @@ fun CurrentWeatherScreen(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun CalendarDetailsScreen(
@@ -233,6 +234,11 @@ fun CalendarDetailsScreen(
     navController: NavHostController
 ) {
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Hourly Details") }
+            )
+        }
     ) { paddingValues ->
         if (state.isLoading) {
             Box(
